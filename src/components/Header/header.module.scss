@@ -1,0 +1,32 @@
+@import '../../variables.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 22px;
+}
+
+.title {
+  font-size: $header6-size;
+  font-weight: $font-weight;
+  line-height: $header6-line-height;
+}
+
+.signIn {
+  font-size: $header6-size;
+  font-weight: $font-weight;
+  line-height: $header6-line-height;
+}
+
+.signUp {
+  color: $succes-color;
+  font-size: $header6-size;
+  font-weight: $font-weight;
+  line-height: $header6-line-height;
+  border: 1px solid $succes-color;
+  margin-left: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}

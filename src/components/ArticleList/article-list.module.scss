@@ -1,0 +1,17 @@
+@import '../../variables.scss';
+
+.articleList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 26px;
+}
+
+.pagination {
+  margin-top: 37px;
+  margin-bottom: 18px;
+}
+
+.pagination li {
+  margin: 0 4px !important;
+}

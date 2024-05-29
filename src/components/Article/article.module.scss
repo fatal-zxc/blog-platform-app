@@ -1,0 +1,94 @@
+@import '../../variables.scss';
+
+.article {
+  overflow-wrap: anywhere;
+  height: 621px;
+  width: 908px;
+  box-shadow: $shadow-2;
+  background-color: #ffffff;
+  margin: 26px auto 0 auto;
+  padding: 5px 16px 24px 16px;
+}
+
+.articleHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.title {
+  font-size: $header5-size;
+  font-weight: 400;
+  line-height: $header5-line-height;
+  color: $info-color;
+  margin-right: 15px;
+}
+
+.likes {
+  color: $text-color;
+  font-size: $font-size-small;
+  line-height: $font-line-height;
+  font-weight: $font-weight;
+  margin-left: 5px;
+}
+
+.tagsList {
+  margin-bottom: 4px;
+}
+
+.tag {
+  background-color: #ffffff;
+  border: 1px solid $text-color-secondary;
+  color: $text-color-secondary;
+  padding: 0 4px 2px 4px;
+  line-height: 15px;
+  margin-right: 8px;
+  border-radius: 2px;
+}
+
+.description {
+  color: $text-color;
+  font-size: $font-size-small;
+  line-height: $font-line-height;
+  font-weight: $font-weight;
+}
+
+.right {
+  overflow-wrap: break-word;
+  display: flex;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  color: $heading-color;
+  font-size: $header6-size;
+  font-weight: $font-weight;
+  line-height: $header6-line-height; 
+}
+
+.date {
+  color: $text-color-secondary;
+  font-size: $font-size-small;
+  line-height: $font-line-height;
+  font-weight: $font-weight;
+}
+
+.avatar {
+  margin-left: 12px;
+  height: 46px;
+  width: 46px;
+}
