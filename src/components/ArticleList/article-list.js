@@ -15,25 +15,20 @@ export default function ArticleList() {
 
   const { data: articles } = useFetchArticlesQuery(page)
 
-  let articleIdCounter = 0
-
-  const articlesPreviews = articles
-    ? articles.articles.map((article) => {
-        articleIdCounter += 1
-        return (
-          <ArticlePreview
-            title={article.title}
-            likes={article.favoritesCount}
-            tags={article.tagList}
-            description={article.description}
-            author={article.author}
-            time={article.updatedAt}
-            slug={article.slug}
-            key={articleIdCounter}
-          />
-        )
-      })
-    : null
+  const articlesPreviews =
+    articles &&
+    articles.articles.map((article) => (
+      <ArticlePreview
+        title={article.title}
+        likes={article.favoritesCount}
+        tags={article.tagList}
+        description={article.description}
+        author={article.author}
+        time={article.updatedAt}
+        slug={article.slug}
+        key={article.slug}
+      />
+    ))
 
   const handlerPagination = (newPage) => {
     dispatch(changePage(newPage))

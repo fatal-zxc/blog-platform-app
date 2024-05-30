@@ -14,22 +14,22 @@ export default function Article() {
   const { data } = useFetchArticleQuery(slug)
 
   const { article } = data ?? {}
-  const { title, likes, tags, description, author, updatedAt, body } = article ?? {}
+  const { title, likes, tagList, description, author, updatedAt, body } = article ?? {}
 
   let tagsIdCounter = 0
-  const tagsList = tags
-    ? tags.map((text) => {
-        tagsIdCounter += 1
-        return (
-          <Tag
-            key={tagsIdCounter}
-            className={styles.tag}
-          >
-            {text}
-          </Tag>
-        )
-      })
-    : null
+  const tagsList =
+    tagList &&
+    tagList.map((text) => {
+      tagsIdCounter += 1
+      return (
+        <Tag
+          key={tagsIdCounter}
+          className={styles.tag}
+        >
+          {text}
+        </Tag>
+      )
+    })
 
   const date = updatedAt ? new Date(updatedAt) : null
 
