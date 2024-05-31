@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { HeartOutlined } from '@ant-design/icons'
-import { Tag } from 'antd'
+import { Tag, Alert, Spin } from 'antd'
 import { format } from 'date-fns'
 import Markdown from 'markdown-to-jsx'
 
@@ -11,7 +11,7 @@ import styles from './article.module.scss'
 export default function Article() {
   const { slug } = useParams()
 
-  const { data } = useFetchArticleQuery(slug)
+  const { data, error, isLoading } = useFetchArticleQuery(slug)
 
   const { article } = data ?? {}
   const { title, likes, tagList, description, author, updatedAt, body } = article ?? {}
@@ -33,7 +33,7 @@ export default function Article() {
 
   const date = updatedAt ? new Date(updatedAt) : null
 
-  const main = article ? (
+  const main = article && (
     <>
       <header className={styles.articleHeader}>
         <div className={styles.left}>
@@ -59,7 +59,22 @@ export default function Article() {
       </header>
       <Markdown>{body}</Markdown>
     </>
-  ) : null
+  )
 
-  return <article className={styles.article}>{main}</article>
+  const errorMessage = error && (
+    <Alert
+      className={styles.error}
+      type="error"
+      message="smth error"
+    />
+  )
+  const loader = isLoading && <Spin className={styles.loader} />
+
+  return (
+    <article className={styles.article}>
+      {main}
+      {errorMessage}
+      {loader}
+    </article>
+  )
 }

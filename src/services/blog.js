@@ -18,7 +18,20 @@ export const blogAPI = createApi({
         url: `/articles/${slug}`,
       }),
     }),
+    registerUser: build.mutation({
+      query: (data) => ({
+        url: '/users',
+        method: 'POST',
+        body: {
+          user: {
+            username: data.username,
+            email: data.email,
+            password: data.password,
+          },
+        },
+      }),
+    }),
   }),
 })
 
-export const { useFetchArticlesQuery, useFetchArticleQuery } = blogAPI
+export const { useFetchArticlesQuery, useFetchArticleQuery, useRegisterUserMutation } = blogAPI

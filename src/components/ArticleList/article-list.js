@@ -1,4 +1,4 @@
-import { Pagination, ConfigProvider } from 'antd'
+import { Pagination, ConfigProvider, Alert, Spin } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { useFetchArticlesQuery } from '../../services/blog'
@@ -13,7 +13,7 @@ export default function ArticleList() {
 
   const page = useSelector(selectPage)
 
-  const { data: articles } = useFetchArticlesQuery(page)
+  const { data: articles, error, isLoading } = useFetchArticlesQuery(page)
 
   const articlesPreviews =
     articles &&
@@ -30,6 +30,14 @@ export default function ArticleList() {
       />
     ))
 
+  const errorMessage = error && (
+    <Alert
+      type="error"
+      message="smth error"
+    />
+  )
+  const loader = isLoading && <Spin />
+
   const handlerPagination = (newPage) => {
     dispatch(changePage(newPage))
   }
@@ -37,6 +45,8 @@ export default function ArticleList() {
   return (
     <section className={styles.articleList}>
       {articlesPreviews}
+      {errorMessage}
+      {loader}
       <ConfigProvider
         theme={{
           token: {
@@ -49,7 +59,7 @@ export default function ArticleList() {
           },
         }}
       >
-        {articles ? (
+        {articles && (
           <Pagination
             className={styles.pagination}
             size="small"
@@ -58,7 +68,7 @@ export default function ArticleList() {
             showSizeChanger={false}
             onChange={handlerPagination}
           />
-        ) : null}
+        )}
       </ConfigProvider>
     </section>
   )

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import ArticleList from '../ArticleList'
 import Layout from '../Layout'
 import Article from '../Article'
+import SignUp from '../SignUp'
 
 import styles from './index.module.scss'
 
@@ -25,6 +26,10 @@ export default function App() {
           <Route
             path="articles/:slug"
             element={<Article />}
+          />
+          <Route
+            path="sign-up"
+            element={<SignUp />}
           />
         </Route>
       </Routes>

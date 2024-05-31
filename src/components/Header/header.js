@@ -1,22 +1,26 @@
+import { Link } from 'react-router-dom'
+
 import styles from './header.module.scss'
 
 export default function Header() {
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>Realworld Blog</h1>
+      <Link to="/">
+        <h1 className={styles.title}>Realworld Blog</h1>
+      </Link>
       <div>
-        <button
-          type="button"
+        <Link
           className={styles.signIn}
+          to="/sign-in"
         >
           Sign In
-        </button>
-        <button
-          type="button"
+        </Link>
+        <Link
           className={styles.signUp}
+          to="/sign-up"
         >
           Sign Up
-        </button>
+        </Link>
       </div>
     </header>
   )

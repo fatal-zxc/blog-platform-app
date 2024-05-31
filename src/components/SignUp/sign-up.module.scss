@@ -1,0 +1,108 @@
+@import '../../variables.scss';
+
+.signUp {
+  width: 380px;
+  min-height: 600px;
+  max-height: 700px;
+  background-color: #ffffff;
+  box-shadow: $shadow-input;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin: 60px auto 25px auto;
+}
+
+.signUp * {
+  font-family: 'Roboto';
+}
+
+.title {
+  color: $heading-color;
+  font-size: $header5-size;
+  line-height: $header5-line-height;
+  font-weight: $font-weight-large;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.label {
+  width: 320px;
+  color: $heading-color;
+  font-weight: $font-weight;
+  font-size: $font-size-base;
+  line-height: $font-line-height;
+  margin-bottom: 12px;
+}
+
+.label:last-of-type {
+  margin-bottom: 0px;
+}
+
+.checkbox {
+  display: flex;
+}
+
+.checkbox_input {
+  width: 16px;
+  height: 16px;
+  margin-top: 5px;
+}
+
+.checkbox_text {
+  margin-left: 8px;
+  font-weight: $font-weight;
+  font-size: $font-size-base;
+  line-height: $font-line-height;
+}
+
+.text {
+  width: 296px;
+  height: 24px;
+  padding: 8px 12px;
+  font-weight: $font-weight;
+  font-size: $font-size-large;
+  line-height: $input-line-height;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+}
+
+.alert {
+  color: $highlight-color;
+  font-weight: $font-weight;
+  font-size: $font-size-base;
+  line-height: $font-line-height;
+}
+
+.submit {
+  width: 320px;
+  height: 40px;
+  background-color: $info-color;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: $font-size-large;
+  font-weight: $font-weight;
+  line-height: $input-line-height;
+  margin-top: 20px;
+}
+
+.response {
+  margin-top: 10px;
+}
+
+.bottom {
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  font-size: $font-size-small;
+  font-weight: $font-weight;
+  line-height: 20px;
+}
+
+.link {
+  color: $info-color;
+}

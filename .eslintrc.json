@@ -19,10 +19,13 @@
       "linebreak-style": [0, "unix"],
       "quotes": ["error", "single"],
       "semi": ["error", "never"],
-      "object-curly-newline": ["error", {"ObjectPattern": "never"}],
+      "object-curly-newline": "off",
       "react/react-in-jsx-scope": "off",
       "react/jsx-one-expression-per-line": "off",
       "react/prop-types": 0,
+      "react/jsx-props-no-spreading": ["error", {
+        "exceptions": ["input"]
+      }],
       "default-param-last": "off",
       "no-param-reassign": "off",
       "import/no-unresolved": [2, { "caseSensitive": false }],

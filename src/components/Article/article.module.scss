@@ -2,11 +2,11 @@
 
 .article {
   overflow-wrap: anywhere;
-  height: 621px;
+  height: 771px;
   width: 908px;
   box-shadow: $shadow-2;
   background-color: #ffffff;
-  margin: 26px auto 0 auto;
+  margin: 26px auto 26px auto;
   padding: 5px 16px 24px 16px;
 }
 
@@ -91,4 +91,15 @@
   margin-left: 12px;
   height: 46px;
   width: 46px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  width: 100px;
+  margin: 0 auto;
+  text-align: center;
 }
