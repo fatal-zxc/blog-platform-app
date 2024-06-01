@@ -8,6 +8,11 @@
   padding: 0 22px;
 }
 
+.right {
+  display: flex;
+  align-items: center;
+}
+
 .title {
   color: $heading-color;
   font-size: $header6-size;
@@ -16,6 +21,7 @@
 }
 
 .signIn {
+  color: $heading-color;
   font-size: $header6-size;
   font-weight: $font-weight;
   line-height: $header6-line-height;
@@ -30,4 +36,49 @@
   margin-left: 20px;
   padding: 5px 10px;
   border-radius: 5px;
+}
+
+.create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 30px;
+  text-align: center;
+  color: $succes-color;
+  font-size: $font-size-base;
+  font-weight: $font-weight;
+  line-height: $font-line-height;
+  border: 1px solid $succes-color;
+  border-radius: 5px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.username {
+  font-weight: $font-weight;
+  font-size: $header6-size;
+  line-height: $header6-line-height;
+  color: $heading-color;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  margin-left: 15px;
+}
+
+.logout {
+  color: $text-color;
+  font-weight: $font-weight;
+  font-size: $header6-size;
+  line-height: $header6-line-height;
+  border: 1px solid $text-color;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 20px;
 }

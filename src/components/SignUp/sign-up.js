@@ -1,13 +1,17 @@
 import { useForm } from 'react-hook-form'
 import { Alert, Spin } from 'antd'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { useRegisterUserMutation } from '../../services/blog'
+import { login } from '../../store/app-slice'
 
 import styles from './sign-up.module.scss'
 
 export default function SignUp() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [errorMessage, setErrorMessage] = useState()
 
   const {
@@ -17,13 +21,15 @@ export default function SignUp() {
     formState: { errors },
   } = useForm()
 
-  const [registerUser, { isLoading, isError, isSuccess }] = useRegisterUserMutation()
+  const [registerUser, { isLoading, isError }] = useRegisterUserMutation()
 
-  let message = ''
   const onSubmit = async (data) => {
     try {
-      await registerUser(data).unwrap()
+      const res = await registerUser(data).unwrap()
+      dispatch(login(res.user))
+      navigate('/')
     } catch (error) {
+      let message = ''
       Object.entries(error.data.errors).forEach(([key, value]) => {
         message += `${key} ${value} `
       })
@@ -46,7 +52,7 @@ export default function SignUp() {
         >
           Username
           <input
-            className={styles.text}
+            className={`${styles.text} ${errors.username ? styles.invalid : ''}`}
             id="username"
             placeholder="Username"
             {...register('username', { required: true, minLength: 3, maxLength: 20, pattern: /^[a-z0-9]*$/ })}
@@ -70,7 +76,7 @@ export default function SignUp() {
         >
           Email address
           <input
-            className={styles.text}
+            className={`${styles.text} ${errors.email ? styles.invalid : ''}`}
             type="email"
             id="email"
             placeholder="Email address"
@@ -84,7 +90,7 @@ export default function SignUp() {
         >
           Password
           <input
-            className={styles.text}
+            className={`${styles.text} ${errors.password ? styles.invalid : ''}`}
             type="password"
             id="password"
             placeholder="Password"
@@ -106,7 +112,7 @@ export default function SignUp() {
         >
           Repeat Password
           <input
-            className={styles.text}
+            className={`${styles.text} ${errors.repeatPassword ? styles.invalid : ''}`}
             type="password"
             id="repeatPassword"
             placeholder="Password"
@@ -134,11 +140,10 @@ export default function SignUp() {
             id="personalInfo"
             {...register('personalInfo', { required: true })}
           />
-          <p className={styles.checkbox_text}>I agree to the processing of my personal information</p>
+          <p className={`${styles.checkbox_text} ${errors.personalInfo ? styles.invalidText : ''}`}>
+            I agree to the processing of my personal information
+          </p>
         </label>
-        {errors.personalInfo && errors.personalInfo.type === 'required' && (
-          <p className={styles.alert}>you must agree to continue</p>
-        )}
         <input
           className={styles.submit}
           value="Create"
@@ -150,12 +155,6 @@ export default function SignUp() {
             className={styles.response}
             type="error"
             message={errorMessage}
-          />
-        )}
-        {isSuccess && (
-          <Alert
-            className={styles.response}
-            message="your account has been created"
           />
         )}
       </form>

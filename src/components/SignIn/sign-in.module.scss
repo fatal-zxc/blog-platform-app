@@ -1,9 +1,9 @@
 @import '../../variables.scss';
 
-.signUp {
+.signIn {
   width: 380px;
-  min-height: 600px;
-  max-height: 700px;
+  min-height: 380px;
+  max-height: 500px;
   background-color: #ffffff;
   box-shadow: $shadow-input;
   border: 1px solid $border-color;
@@ -22,6 +22,7 @@
   font-weight: $font-weight-large;
   text-align: center;
   margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .form {
@@ -41,23 +42,6 @@
 
 .label:last-of-type {
   margin-bottom: 0px;
-}
-
-.checkbox {
-  display: flex;
-}
-
-.checkbox_input {
-  width: 16px;
-  height: 16px;
-  margin-top: 5px;
-}
-
-.checkbox_text {
-  margin-left: 8px;
-  font-weight: $font-weight;
-  font-size: $font-size-base;
-  line-height: $font-line-height;
 }
 
 .text {
@@ -105,7 +89,7 @@
 .bottom {
   text-align: center;
   margin-top: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 45px;
   font-size: $font-size-small;
   font-weight: $font-weight;
   line-height: 20px;

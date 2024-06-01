@@ -1,8 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import Cookies from 'js-cookie'
 
 export const blogAPI = createApi({
   reducerPath: 'blogAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://blog.kata.academy/api',
+    prepareHeaders: (headers, { endpoint }) => {
+      const authToken = Cookies.get('authToken')
+      if (authToken) {
+        headers.set('Authorization', `Token ${authToken}`)
+      }
+      if (endpoint === 'loginUser' || endpoint === 'registerUser') {
+        headers.set('Content-Type', 'application/json')
+      }
+      return headers
+    },
+  }),
   endpoints: (build) => ({
     fetchArticles: build.query({
       query: (page) => ({
@@ -18,6 +31,11 @@ export const blogAPI = createApi({
         url: `/articles/${slug}`,
       }),
     }),
+    getUser: build.query({
+      query: () => ({
+        url: '/user',
+      }),
+    }),
     registerUser: build.mutation({
       query: (data) => ({
         url: '/users',
@@ -31,7 +49,25 @@ export const blogAPI = createApi({
         },
       }),
     }),
+    loginUser: build.mutation({
+      query: (data) => ({
+        url: '/users/login',
+        method: 'POST',
+        body: {
+          user: {
+            email: data.email,
+            password: data.password,
+          },
+        },
+      }),
+    }),
   }),
 })
 
-export const { useFetchArticlesQuery, useFetchArticleQuery, useRegisterUserMutation } = blogAPI
+export const {
+  useFetchArticlesQuery,
+  useFetchArticleQuery,
+  useGetUserQuery,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+} = blogAPI
