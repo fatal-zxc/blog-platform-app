@@ -29,7 +29,6 @@ export default function SignIn() {
       trigger()
       navigate('/')
     } catch (error) {
-      console.log(error)
       let message = ''
       Object.entries(error.data.errors).forEach(([key, value]) => {
         message += `${key} ${value} `
