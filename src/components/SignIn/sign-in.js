@@ -4,7 +4,7 @@ import { Spin, Alert } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { useLoginUserMutation, useGetUserQuery } from '../../services/blog'
+import { useLoginUserMutation, useLazyGetUserQuery } from '../../services/blog'
 
 import styles from './sign-in.module.scss'
 
@@ -12,7 +12,7 @@ export default function SignIn() {
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState()
 
-  const { refetch } = useGetUserQuery()
+  const [trigger] = useLazyGetUserQuery()
 
   const {
     register,
@@ -26,9 +26,10 @@ export default function SignIn() {
     try {
       const res = await loginUser(data).unwrap()
       Cookies.set('authToken', res.user.token, { secure: true, expires: 1 })
-      refetch()
+      trigger()
       navigate('/')
     } catch (error) {
+      console.log(error)
       let message = ''
       Object.entries(error.data.errors).forEach(([key, value]) => {
         message += `${key} ${value} `

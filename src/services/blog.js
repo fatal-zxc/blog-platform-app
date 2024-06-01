@@ -68,6 +68,7 @@ export const {
   useFetchArticlesQuery,
   useFetchArticleQuery,
   useGetUserQuery,
+  useLazyGetUserQuery,
   useRegisterUserMutation,
   useLoginUserMutation,
 } = blogAPI
