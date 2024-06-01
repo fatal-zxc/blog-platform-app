@@ -2,16 +2,14 @@ import { useForm } from 'react-hook-form'
 import { Alert, Spin } from 'antd'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 
-import { useRegisterUserMutation } from '../../services/blog'
-import { login } from '../../store/app-slice'
+import { useGetUserQuery, useRegisterUserMutation } from '../../services/blog'
 
 import styles from './sign-up.module.scss'
 
 export default function SignUp() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const [errorMessage, setErrorMessage] = useState()
 
   const {
@@ -22,11 +20,13 @@ export default function SignUp() {
   } = useForm()
 
   const [registerUser, { isLoading, isError }] = useRegisterUserMutation()
+  const { refetch } = useGetUserQuery()
 
   const onSubmit = async (data) => {
     try {
       const res = await registerUser(data).unwrap()
-      dispatch(login(res.user))
+      Cookies.set('authToken', res.user.token, { secure: true, expires: 1 })
+      refetch()
       navigate('/')
     } catch (error) {
       let message = ''

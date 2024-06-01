@@ -1,22 +1,21 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 
-import { selectUser } from '../../store/selectors'
-import { logout } from '../../store/app-slice'
+import { useGetUserQuery } from '../../services/blog'
 
 import styles from './header.module.scss'
 
 export default function Header() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const user = useSelector(selectUser)
+  const { data, refetch, isError, isSuccess } = useGetUserQuery()
 
   const logOut = () => {
-    dispatch(logout())
+    Cookies.remove('authToken')
+    refetch()
     navigate('/')
   }
 
-  const authHeader = user && (
+  const authHeader = isSuccess && (
     <div className={styles.right}>
       <Link
         to="/"
@@ -28,9 +27,9 @@ export default function Header() {
         to="/"
         className={styles.profile}
       >
-        <p className={styles.username}>{user.username}</p>
+        <p className={styles.username}>{data.user.username}</p>
         <img
-          src={user.image}
+          src={data.user.image}
           className={styles.avatar}
           alt="avatar"
         />
@@ -45,7 +44,7 @@ export default function Header() {
     </div>
   )
 
-  const errorHeader = !user && (
+  const errorHeader = isError && (
     <div className={styles.right}>
       <Link
         className={styles.signIn}

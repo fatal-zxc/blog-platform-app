@@ -2,17 +2,17 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { Spin, Alert } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 
-import { useLoginUserMutation } from '../../services/blog'
-import { login } from '../../store/app-slice'
+import { useLoginUserMutation, useGetUserQuery } from '../../services/blog'
 
 import styles from './sign-in.module.scss'
 
 export default function SignIn() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const [errorMessage, setErrorMessage] = useState()
+
+  const { refetch } = useGetUserQuery()
 
   const {
     register,
@@ -25,7 +25,8 @@ export default function SignIn() {
   const onSubmit = async (data) => {
     try {
       const res = await loginUser(data).unwrap()
-      dispatch(login(res.user))
+      Cookies.set('authToken', res.user.token, { secure: true, expires: 1 })
+      refetch()
       navigate('/')
     } catch (error) {
       let message = ''
