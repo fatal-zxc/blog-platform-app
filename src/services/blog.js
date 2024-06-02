@@ -10,7 +10,7 @@ export const blogAPI = createApi({
       if (authToken) {
         headers.set('Authorization', `Token ${authToken}`)
       }
-      if (endpoint === 'loginUser' || endpoint === 'registerUser') {
+      if (endpoint === 'loginUser' || endpoint === 'registerUser' || endpoint === 'updateUser') {
         headers.set('Content-Type', 'application/json')
       }
       return headers
@@ -61,6 +61,20 @@ export const blogAPI = createApi({
         },
       }),
     }),
+    updateUser: build.mutation({
+      query: (data) => ({
+        url: '/user',
+        method: 'PUT',
+        body: {
+          user: {
+            email: data.email,
+            username: data.username,
+            image: data.avatar,
+            password: data.password,
+          },
+        },
+      }),
+    }),
   }),
 })
 
@@ -71,4 +85,5 @@ export const {
   useLazyGetUserQuery,
   useRegisterUserMutation,
   useLoginUserMutation,
+  useUpdateUserMutation,
 } = blogAPI

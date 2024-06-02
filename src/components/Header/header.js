@@ -1,17 +1,20 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { useGetUserQuery } from '../../services/blog'
+import { useLazyGetUserQuery } from '../../services/blog'
 
 import styles from './header.module.scss'
 
 export default function Header() {
   const navigate = useNavigate()
-  const { data, refetch, isError, isSuccess } = useGetUserQuery()
+  const [trigger, { data, isError, isSuccess, isUninitialized }] = useLazyGetUserQuery()
+  if (Cookies.get('authToken') && isUninitialized) {
+    trigger()
+  }
 
   const logOut = () => {
     Cookies.remove('authToken')
-    refetch()
+    trigger()
     navigate('/')
   }
 
@@ -24,7 +27,7 @@ export default function Header() {
         Create article
       </Link>
       <Link
-        to="/"
+        to="/profile"
         className={styles.profile}
       >
         <p className={styles.username}>{data.user.username}</p>
@@ -44,7 +47,7 @@ export default function Header() {
     </div>
   )
 
-  const errorHeader = isError && (
+  const errorHeader = (isError || !data) && (
     <div className={styles.right}>
       <Link
         className={styles.signIn}

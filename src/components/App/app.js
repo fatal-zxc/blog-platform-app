@@ -5,6 +5,7 @@ import Layout from '../Layout'
 import Article from '../Article'
 import SignUp from '../SignUp'
 import SignIn from '../SignIn'
+import Profile from '../Profile'
 
 import styles from './index.module.scss'
 
@@ -35,6 +36,10 @@ export default function App() {
           <Route
             path="sign-in"
             element={<SignIn />}
+          />
+          <Route
+            path="profile"
+            element={<Profile />}
           />
         </Route>
       </Routes>
