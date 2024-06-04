@@ -67,6 +67,7 @@
 .right {
   overflow-wrap: break-word;
   display: flex;
+  justify-content: flex-end;
 }
 
 .info {
@@ -78,7 +79,8 @@
   color: $heading-color;
   font-size: $header6-size;
   font-weight: $font-weight;
-  line-height: $header6-line-height; 
+  line-height: $header6-line-height;
+  text-align: end;
 }
 
 .date {
@@ -92,6 +94,37 @@
   margin-left: 12px;
   height: 46px;
   width: 46px;
+}
+
+.ownerPanel {
+  display: flex;
+  margin-top: 30px;
+}
+
+.delete {
+  color: $highlight-color;
+  font-size: $font-size-base;
+  font-weight: 400;
+  line-height: $font-line-height;
+  border: 1px solid $highlight-color;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+}
+
+.edit {
+  color: $success-color;
+  font-size: $font-size-base;
+  font-weight: 400;
+  line-height: $font-line-height;
+  border: 1px solid $success-color;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
 }
 
 .loader {

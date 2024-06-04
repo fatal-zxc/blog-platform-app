@@ -2,14 +2,21 @@ import { useForm, useFieldArray } from 'react-hook-form'
 
 import styles from './article-form.module.scss'
 
-export default function ArticleForm({ submit }) {
+export default function ArticleForm({ submit, article }) {
   const {
     register,
     control,
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm({
+    defaultValues: {
+      title: article && article.title,
+      description: article && article.description,
+      text: article && article.body,
+      tags: article && article.tags,
+    },
+  })
   const { fields, remove, append } = useFieldArray({
     control,
     name: 'tags',

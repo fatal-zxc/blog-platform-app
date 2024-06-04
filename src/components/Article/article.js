@@ -1,20 +1,28 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { HeartOutlined } from '@ant-design/icons'
-import { Tag, Alert, Spin } from 'antd'
+import { Tag, Alert, Spin, Popconfirm } from 'antd'
 import { format } from 'date-fns'
 import Markdown from 'markdown-to-jsx'
 
-import { useFetchArticleQuery } from '../../services/blog'
+import { useFetchArticleQuery, useGetUserQuery, useDeleteArticleMutation } from '../../services/blog'
 
 import styles from './article.module.scss'
 
 export default function Article() {
   const { slug } = useParams()
+  const navigate = useNavigate()
 
   const { data, error, isLoading } = useFetchArticleQuery(slug)
+  const { data: user } = useGetUserQuery()
+  const [deleteArticle] = useDeleteArticleMutation()
 
   const { article } = data ?? {}
-  const { title, likes, tagList, description, author, updatedAt, body } = article ?? {}
+  const { title, favoritesCount: likes, tagList, description, author, updatedAt, body } = article ?? {}
+
+  const handleDelete = () => {
+    deleteArticle(slug)
+    navigate('/')
+  }
 
   let tagsIdCounter = 0
   const tagsList =
@@ -45,17 +53,56 @@ export default function Article() {
           <div className={styles.tagsList}>{tagsList}</div>
           <p className={styles.description}>{description}</p>
         </div>
-        <div className={styles.right}>
-          <div className={styles.info}>
-            <h2 className={styles.username}>{author.username}</h2>
-            <p className={styles.date}>{`${format(date, 'MMMM')} ${format(date, 'd')}, ${format(date, 'y')}`}</p>
+        {user.user.username === author.username ? (
+          <div>
+            <div className={styles.right}>
+              <div className={styles.info}>
+                <h2 className={styles.username}>{author.username}</h2>
+                <p className={styles.date}>{`${format(date, 'MMMM')} ${format(date, 'd')}, ${format(date, 'y')}`}</p>
+              </div>
+              <img
+                className={styles.avatar}
+                src={author.image}
+                alt="avatar"
+              />
+            </div>
+            <div className={styles.ownerPanel}>
+              <Popconfirm
+                title="Are you sure to delete this article?"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={handleDelete}
+                placement="rightTop"
+              >
+                <button
+                  className={styles.delete}
+                  type="button"
+                  aria-label="Delete"
+                >
+                  Delete
+                </button>
+              </Popconfirm>
+              <Link
+                className={styles.edit}
+                to={`/articles/${slug}/edit`}
+              >
+                Edit
+              </Link>
+            </div>
           </div>
-          <img
-            className={styles.avatar}
-            src={author.image}
-            alt="avatar"
-          />
-        </div>
+        ) : (
+          <div className={styles.right}>
+            <div className={styles.info}>
+              <h2 className={styles.username}>{author.username}</h2>
+              <p className={styles.date}>{`${format(date, 'MMMM')} ${format(date, 'd')}, ${format(date, 'y')}`}</p>
+            </div>
+            <img
+              className={styles.avatar}
+              src={author.image}
+              alt="avatar"
+            />
+          </div>
+        )}
       </header>
       <Markdown>{body}</Markdown>
     </>

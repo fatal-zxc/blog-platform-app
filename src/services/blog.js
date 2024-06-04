@@ -14,7 +14,8 @@ export const blogAPI = createApi({
         endpoint === 'loginUser' ||
         endpoint === 'registerUser' ||
         endpoint === 'updateUser' ||
-        endpoint === 'createArticle'
+        endpoint === 'createArticle' ||
+        endpoint === 'updateArticle'
       ) {
         headers.set('Content-Type', 'application/json')
       }
@@ -30,6 +31,7 @@ export const blogAPI = createApi({
           offset: page * 5 - 5,
         },
       }),
+      providesTags: ['Articles'],
     }),
     fetchArticle: build.query({
       query: (slug) => ({
@@ -79,6 +81,7 @@ export const blogAPI = createApi({
           },
         },
       }),
+      invalidatesTags: ['Articles'],
     }),
     updateUser: build.mutation({
       query: (data) => ({
@@ -94,16 +97,41 @@ export const blogAPI = createApi({
         },
       }),
     }),
+    updateArticle: build.mutation({
+      query: (data) => ({
+        url: `/articles/${data.slug}`,
+        method: 'PUT',
+        body: {
+          article: {
+            title: data.title,
+            description: data.description,
+            body: data.text,
+            tags: data.tags,
+          },
+        },
+      }),
+      invalidatesTags: ['Articles'],
+    }),
+    deleteArticle: build.mutation({
+      query: (slug) => ({
+        url: `/articles/${slug}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Articles'],
+    }),
   }),
 })
 
 export const {
   useFetchArticlesQuery,
   useFetchArticleQuery,
+  useLazyFetchArticleQuery,
   useGetUserQuery,
   useLazyGetUserQuery,
   useRegisterUserMutation,
   useLoginUserMutation,
   useCreateArticleMutation,
   useUpdateUserMutation,
+  useUpdateArticleMutation,
+  useDeleteArticleMutation,
 } = blogAPI

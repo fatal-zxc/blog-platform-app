@@ -7,7 +7,9 @@ import SignUp from '../SignUp'
 import SignIn from '../SignIn'
 import Profile from '../Profile'
 import NewArticle from '../NewArticle'
+import ArticleEdit from '../ArticleEdit'
 import RequireAuth from '../../hoc/require-auth'
+import RequireOwner from '../../hoc/require-owner'
 
 import styles from './index.module.scss'
 
@@ -53,6 +55,14 @@ export default function App() {
               <RequireAuth>
                 <NewArticle />
               </RequireAuth>
+            }
+          />
+          <Route
+            path="articles/:slug/edit"
+            element={
+              <RequireOwner>
+                <ArticleEdit />
+              </RequireOwner>
             }
           />
         </Route>
