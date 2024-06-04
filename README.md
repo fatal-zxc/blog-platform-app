@@ -1,1 +1,1 @@
-site: 
+site: https://blog-platform-app-bay.vercel.app/
