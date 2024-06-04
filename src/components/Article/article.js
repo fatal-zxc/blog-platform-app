@@ -1,10 +1,16 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { HeartOutlined } from '@ant-design/icons'
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { Tag, Alert, Spin, Popconfirm } from 'antd'
 import { format } from 'date-fns'
 import Markdown from 'markdown-to-jsx'
 
-import { useFetchArticleQuery, useGetUserQuery, useDeleteArticleMutation } from '../../services/blog'
+import {
+  useFetchArticleQuery,
+  useGetUserQuery,
+  useDeleteArticleMutation,
+  useFavoriteArticleMutation,
+  useUnfavoriteArticleMutation,
+} from '../../services/blog'
 
 import styles from './article.module.scss'
 
@@ -17,7 +23,7 @@ export default function Article() {
   const [deleteArticle] = useDeleteArticleMutation()
 
   const { article } = data ?? {}
-  const { title, favoritesCount: likes, tagList, description, author, updatedAt, body } = article ?? {}
+  const { title, favoritesCount: likes, favorited: like, tagList, description, author, updatedAt, body } = article ?? {}
 
   const handleDelete = () => {
     deleteArticle(slug)
@@ -41,13 +47,40 @@ export default function Article() {
 
   const date = updatedAt ? new Date(updatedAt) : null
 
+  const [favoriteArticle] = useFavoriteArticleMutation()
+  const [unfavoriteArticle] = useUnfavoriteArticleMutation()
+
+  const favorite = () => {
+    favoriteArticle(slug)
+  }
+
+  const unfavorite = () => {
+    unfavoriteArticle(slug)
+  }
+
   const main = article && (
     <>
       <header className={styles.articleHeader}>
         <div className={styles.left}>
           <header className={styles.header}>
             <h1 className={styles.title}>{title}</h1>
-            <HeartOutlined />
+            {like ? (
+              <button
+                aria-label="favorite"
+                type="button"
+                onClick={unfavorite}
+              >
+                <HeartFilled />
+              </button>
+            ) : (
+              <button
+                aria-label="favorite"
+                type="button"
+                onClick={favorite}
+              >
+                <HeartOutlined />
+              </button>
+            )}
             <p className={styles.likes}>{likes}</p>
           </header>
           <div className={styles.tagsList}>{tagsList}</div>

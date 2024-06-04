@@ -1,11 +1,13 @@
 import { Tag } from 'antd'
-import { HeartOutlined } from '@ant-design/icons'
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
 
+import { useFavoriteArticleMutation, useUnfavoriteArticleMutation } from '../../services/blog'
+
 import styles from './article-preview.module.scss'
 
-export default function ArticlePreview({ title, likes, tags, description, author, time, slug }) {
+export default function ArticlePreview({ title, likes, like, tags, description, author, time, slug }) {
   let tagsIdCounter = 0
   const tagsList = tags.map((text) => {
     tagsIdCounter += 1
@@ -20,6 +22,17 @@ export default function ArticlePreview({ title, likes, tags, description, author
   })
   const date = new Date(time)
 
+  const [favoriteArticle] = useFavoriteArticleMutation()
+  const [unfavoriteArticle] = useUnfavoriteArticleMutation()
+
+  const favorite = () => {
+    favoriteArticle(slug)
+  }
+
+  const unfavorite = () => {
+    unfavoriteArticle(slug)
+  }
+
   return (
     <article className={styles.article}>
       <div className={styles.left}>
@@ -27,7 +40,23 @@ export default function ArticlePreview({ title, likes, tags, description, author
           <Link to={`/articles/${slug}`}>
             <h1 className={styles.title}>{title}</h1>
           </Link>
-          <HeartOutlined />
+          {like ? (
+            <button
+              aria-label="favorite"
+              type="button"
+              onClick={unfavorite}
+            >
+              <HeartFilled />
+            </button>
+          ) : (
+            <button
+              aria-label="favorite"
+              type="button"
+              onClick={favorite}
+            >
+              <HeartOutlined />
+            </button>
+          )}
           <p className={styles.likes}>{likes}</p>
         </header>
         <div className={styles.tagsList}>{tagsList}</div>

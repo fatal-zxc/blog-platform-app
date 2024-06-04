@@ -21,6 +21,7 @@ export default function ArticleList() {
       <ArticlePreview
         title={article.title}
         likes={article.favoritesCount}
+        like={article.favorited}
         tags={article.tagList}
         description={article.description}
         author={article.author}

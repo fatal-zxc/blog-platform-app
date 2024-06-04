@@ -37,6 +37,7 @@ export const blogAPI = createApi({
       query: (slug) => ({
         url: `/articles/${slug}`,
       }),
+      providesTags: ['Articles'],
     }),
     getUser: build.query({
       query: () => ({
@@ -83,6 +84,13 @@ export const blogAPI = createApi({
       }),
       invalidatesTags: ['Articles'],
     }),
+    favoriteArticle: build.mutation({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Articles'],
+    }),
     updateUser: build.mutation({
       query: (data) => ({
         url: '/user',
@@ -119,6 +127,13 @@ export const blogAPI = createApi({
       }),
       invalidatesTags: ['Articles'],
     }),
+    unfavoriteArticle: build.mutation({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Articles'],
+    }),
   }),
 })
 
@@ -131,7 +146,9 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useCreateArticleMutation,
+  useFavoriteArticleMutation,
   useUpdateUserMutation,
   useUpdateArticleMutation,
   useDeleteArticleMutation,
+  useUnfavoriteArticleMutation,
 } = blogAPI
