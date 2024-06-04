@@ -88,7 +88,7 @@ export default function ArticleForm({ submit, article }) {
                 <input
                   className={styles.text}
                   placeholder="Tag"
-                  defaultValue={tag[0]}
+                  defaultValue={article.tagList[index]}
                   {...register(`tags.${index}.value`, {
                     required: true,
                     pattern: /^[a-zA-Z0-9]+$/,
