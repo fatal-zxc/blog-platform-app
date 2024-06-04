@@ -89,6 +89,12 @@
   border: 1px solid $info-color;
   border-radius: 5px;
   align-self: flex-end;
+  transition: 0.4s;
+}
+
+.addTag:hover {
+  color: #ffffff;
+  background-color: $info-color;
 }
 
 .submit {
@@ -102,4 +108,11 @@
   line-height: $input-line-height;
   margin-top: 20px;
   margin-bottom: 50px;
+  transition: 0.4s;
+}
+
+.submit:hover {
+  color: $info-color;
+  background-color: #ffffff;
+  border: 1px solid $info-color;
 }

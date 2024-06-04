@@ -11,6 +11,10 @@
   margin: 35px auto 25px auto;
 }
 
+.newArticle * {
+  font-family: 'Roboto';
+}
+
 .title {
   color: $heading-color;
   font-size: $header5-size;

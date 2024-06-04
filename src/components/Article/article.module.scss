@@ -110,6 +110,12 @@
   border-radius: 5px;
   width: 80px;
   height: 30px;
+  transition: 0.4s;
+}
+
+.delete:hover {
+  color: #ffffff;
+  background-color: $highlight-color;
 }
 
 .edit {
@@ -125,6 +131,12 @@
   align-items: center;
   justify-content: center;
   margin-left: 12px;
+  transition: 0.4s;
+}
+
+.edit:hover {
+  color: #ffffff;
+  background-color: $success-color;
 }
 
 .loader {

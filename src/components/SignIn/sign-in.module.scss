@@ -80,6 +80,13 @@
   font-weight: $font-weight;
   line-height: $input-line-height;
   margin-top: 20px;
+  transition: 0.4s;
+}
+
+.submit:hover {
+  color: $info-color;
+  background-color: #ffffff;
+  border: 1px solid $info-color;
 }
 
 .response {
@@ -97,4 +104,9 @@
 
 .link {
   color: $info-color;
+  transition: 0.2s;
+}
+
+.link:hover {
+  color: $success-color;
 }

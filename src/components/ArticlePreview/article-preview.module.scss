@@ -29,6 +29,11 @@
   line-height: $header5-line-height;
   color: $info-color;
   margin-right: 15px;
+  transition: color 0.2s;
+}
+
+.title:hover {
+  color: $success-color;
 }
 
 .likes {
