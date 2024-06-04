@@ -47,10 +47,13 @@ export default function ArticleForm({ submit }) {
           className={`${styles.text} ${errors.description ? styles.invalid : ''}`}
           id="description"
           placeholder="Short description"
-          {...register('description', { required: true })}
+          {...register('description', { required: true, maxLength: 200 })}
         />
         {errors.description && errors.description.type === 'required' && (
           <p className={styles.alert}>description is required</p>
+        )}
+        {errors.description && errors.description.type === 'maxLength' && (
+          <p className={styles.alert}>description must be no more than 200 characters</p>
         )}
       </label>
       <label
