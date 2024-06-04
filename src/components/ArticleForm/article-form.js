@@ -14,7 +14,7 @@ export default function ArticleForm({ submit, article }) {
       title: article && article.title,
       description: article && article.description,
       text: article && article.body,
-      tags: article && article.tags,
+      tags: article && article.tagList,
     },
   })
   const { fields, remove, append } = useFieldArray({
