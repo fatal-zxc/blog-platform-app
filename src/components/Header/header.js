@@ -21,7 +21,7 @@ export default function Header() {
   const authHeader = isSuccess && (
     <div className={styles.right}>
       <Link
-        to="/"
+        to="/new-article"
         className={styles.create}
       >
         Create article

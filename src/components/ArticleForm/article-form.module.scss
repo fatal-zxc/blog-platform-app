@@ -1,0 +1,105 @@
+@import '../../variables.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 32px 0 32px;
+}
+
+.label {
+  color: $text-label-color;
+  font-size: $font-size-base;
+  line-height: $font-line-height;
+  font-weight: $font-weight;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.labelTags {
+  margin-bottom: 0;
+}
+
+.text {
+  height: 24px;
+  padding: 8px 12px;
+  font-weight: $font-weight;
+  font-size: $font-size-large;
+  line-height: $input-line-height;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+}
+
+.textarea {
+  min-height: 150px;
+  max-height: 600px;
+  min-width: 300px;
+  max-width: 850px;
+  padding: 8px 12px;
+  font-weight: $font-weight;
+  font-size: $font-size-large;
+  line-height: $input-line-height;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+}
+
+.alert {
+  color: $highlight-color;
+  font-weight: $font-weight;
+  font-size: $font-size-base;
+  line-height: $font-line-height;
+}
+
+.tagMenu {
+  display: flex;
+}
+
+.tagList {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+}
+
+.tag {
+  display: flex;
+  height: 40px;
+}
+
+.tagWrapper {
+  margin-bottom: 5px;
+}
+
+.tagWrapper:last-of-type {
+  margin-bottom: 0px;
+}
+
+.delete {
+  color: $highlight-color;
+  width: 120px;
+  height: 40px;
+  border: 1px solid $highlight-color;
+  border-radius: 5px;
+  margin-left: 15px;
+}
+
+.addTag {
+  color: $info-color;
+  width: 120px;
+  height: 40px;
+  border: 1px solid $info-color;
+  border-radius: 5px;
+  align-self: flex-end;
+}
+
+.submit {
+  width: 320px;
+  height: 40px;
+  background-color: $info-color;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: $font-size-large;
+  font-weight: $font-weight;
+  line-height: $input-line-height;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}

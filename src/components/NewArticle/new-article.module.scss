@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+
+.newArticle {
+  width: 940px;
+  min-height: 650px;
+  max-height: 100%;
+  background-color: #ffffff;
+  box-shadow: $shadow-input;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  margin: 35px auto 25px auto;
+}
+
+.title {
+  color: $heading-color;
+  font-size: $header5-size;
+  line-height: $header5-line-height;
+  font-weight: $font-weight-large;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}

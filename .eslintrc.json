@@ -24,7 +24,7 @@
       "react/jsx-one-expression-per-line": "off",
       "react/prop-types": 0,
       "react/jsx-props-no-spreading": ["error", {
-        "exceptions": ["input"]
+        "exceptions": ["input", "textarea"]
       }],
       "default-param-last": "off",
       "no-param-reassign": "off",

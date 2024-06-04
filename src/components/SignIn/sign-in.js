@@ -54,7 +54,7 @@ export default function SignIn() {
             type="email"
             id="email"
             placeholder="Email address"
-            {...register('email', { required: true })}
+            {...register('email', { required: true, pattern: /^[a-zA-Z0-9_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/ })}
           />
           {errors.email && errors.email.type === 'required' && <p className={styles.alert}>email is required</p>}
         </label>

@@ -6,6 +6,8 @@ import Article from '../Article'
 import SignUp from '../SignUp'
 import SignIn from '../SignIn'
 import Profile from '../Profile'
+import NewArticle from '../NewArticle'
+import RequireAuth from '../../hoc/require-auth'
 
 import styles from './index.module.scss'
 
@@ -39,7 +41,19 @@ export default function App() {
           />
           <Route
             path="profile"
-            element={<Profile />}
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="new-article"
+            element={
+              <RequireAuth>
+                <NewArticle />
+              </RequireAuth>
+            }
           />
         </Route>
       </Routes>
