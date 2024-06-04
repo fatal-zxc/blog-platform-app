@@ -80,6 +80,12 @@
   border: 1px solid $highlight-color;
   border-radius: 5px;
   margin-left: 15px;
+  transition: 0.4s;
+}
+
+.delete:hover {
+  color: #ffffff;
+  background-color: $highlight-color;
 }
 
 .addTag {
