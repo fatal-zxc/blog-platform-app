@@ -3,10 +3,11 @@ import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { Tag, Alert, Spin, Popconfirm } from 'antd'
 import { format } from 'date-fns'
 import Markdown from 'markdown-to-jsx'
+import Cookies from 'js-cookie'
 
 import {
   useFetchArticleQuery,
-  useGetUserQuery,
+  useLazyGetUserQuery,
   useDeleteArticleMutation,
   useFavoriteArticleMutation,
   useUnfavoriteArticleMutation,
@@ -19,7 +20,8 @@ export default function Article() {
   const navigate = useNavigate()
 
   const { data, error, isLoading } = useFetchArticleQuery(slug)
-  const { data: user } = useGetUserQuery()
+  const [trigger, { data: user, isUninitialized }] = useLazyGetUserQuery()
+  if (Cookies.get('authToken') && isUninitialized) trigger()
   const [deleteArticle] = useDeleteArticleMutation()
 
   const { article } = data ?? {}
@@ -51,6 +53,7 @@ export default function Article() {
   const [unfavoriteArticle] = useUnfavoriteArticleMutation()
 
   const favorite = () => {
+    if (!Cookies.get('authToken')) return
     favoriteArticle(slug)
   }
 
@@ -86,7 +89,7 @@ export default function Article() {
           <div className={styles.tagsList}>{tagsList}</div>
           <p className={styles.description}>{description}</p>
         </div>
-        {user.user.username === author.username ? (
+        {user && user.user.username === author.username ? (
           <div>
             <div className={styles.right}>
               <div className={styles.info}>

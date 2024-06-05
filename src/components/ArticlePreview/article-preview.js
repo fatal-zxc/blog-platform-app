@@ -2,6 +2,7 @@ import { Tag } from 'antd'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import { useFavoriteArticleMutation, useUnfavoriteArticleMutation } from '../../services/blog'
 
@@ -26,6 +27,7 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
   const [unfavoriteArticle] = useUnfavoriteArticleMutation()
 
   const favorite = () => {
+    if (!Cookies.get('authToken')) return
     favoriteArticle(slug)
   }
 
