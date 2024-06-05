@@ -43,6 +43,7 @@ export const blogAPI = createApi({
       query: () => ({
         url: '/user',
       }),
+      providesTags: ['User'],
     }),
     registerUser: build.mutation({
       query: (data) => ({
@@ -56,6 +57,7 @@ export const blogAPI = createApi({
           },
         },
       }),
+      invalidatesTags: ['User'],
     }),
     loginUser: build.mutation({
       query: (data) => ({
@@ -68,6 +70,7 @@ export const blogAPI = createApi({
           },
         },
       }),
+      invalidatesTags: ['Articles', 'User'],
     }),
     createArticle: build.mutation({
       query: (data) => ({

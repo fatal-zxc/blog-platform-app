@@ -1,11 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useDispatch } from 'react-redux'
 
-import { useLazyGetUserQuery } from '../../services/blog'
+import { useLazyGetUserQuery, blogAPI } from '../../services/blog'
 
 import styles from './header.module.scss'
 
 export default function Header() {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [trigger, { data, isError, isSuccess, isUninitialized }] = useLazyGetUserQuery()
   if (Cookies.get('authToken') && isUninitialized) {
@@ -14,7 +16,7 @@ export default function Header() {
 
   const logOut = () => {
     Cookies.remove('authToken')
-    trigger()
+    dispatch(blogAPI.util.invalidateTags(['User', 'Articles']))
     navigate('/')
   }
 
