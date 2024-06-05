@@ -35,6 +35,24 @@
   margin-right: 15px;
 }
 
+.heartButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+}
+
+.heartButton:hover {
+  border-radius: 50%;
+  background-color: $border-color;
+}
+
+.heart * {
+  width: 15px;
+  height: 15px;
+}
+
 .likes {
   color: $text-color;
   font-size: $font-size-small;

@@ -46,17 +46,19 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
             <button
               aria-label="favorite"
               type="button"
+              className={styles.heartButton}
               onClick={unfavorite}
             >
-              <HeartFilled />
+              <HeartFilled className={styles.heart} />
             </button>
           ) : (
             <button
               aria-label="favorite"
               type="button"
+              className={styles.heartButton}
               onClick={favorite}
             >
-              <HeartOutlined />
+              <HeartOutlined className={styles.heart} />
             </button>
           )}
           <p className={styles.likes}>{likes}</p>
