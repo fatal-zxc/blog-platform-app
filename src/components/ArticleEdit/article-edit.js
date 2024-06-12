@@ -14,7 +14,7 @@ export default function ArticleEdit() {
   const slug = location.pathname.split('/')[2]
   const { data: article, isLoading, isError, isSuccess } = useFetchArticleQuery(slug)
   const [trigger] = useLazyFetchArticleQuery()
-  const [updateArticle, { isError: isErrorUpdate }] = useUpdateArticleMutation()
+  const [updateArticle, { isError: isErrorUpdate, isLoading: isUpdateLoading }] = useUpdateArticleMutation()
 
   const onSubmit = async (data) => {
     data.tags = data.tags.map((el) => el.value)
@@ -45,6 +45,7 @@ export default function ArticleEdit() {
   const main = isSuccess && (
     <ArticleForm
       submit={onSubmit}
+      isLoading={isUpdateLoading}
       article={article.article}
     />
   )

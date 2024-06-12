@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Spin, Alert } from 'antd'
+import { Spin } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -9,7 +9,8 @@ import styles from './profile.module.scss'
 
 export default function Profile() {
   const navigate = useNavigate()
-  const [errorMessage, setErrorMessage] = useState()
+  const [serverErrors, setServerErrors] = useState({})
+
   const { data: userdata, isSuccess, isLoading: isFormLoading } = useGetUserQuery()
   const [trigger] = useLazyGetUserQuery()
   const { user } = isSuccess && userdata
@@ -18,7 +19,7 @@ export default function Profile() {
     handleSubmit,
     formState: { errors },
   } = useForm()
-  const [updateUser, { isError, isLoading }] = useUpdateUserMutation()
+  const [updateUser, { isLoading }] = useUpdateUserMutation()
 
   const onSubmit = async (data) => {
     try {
@@ -26,11 +27,7 @@ export default function Profile() {
       trigger()
       navigate('/')
     } catch (error) {
-      let message = ''
-      Object.entries(error.data.errors).forEach(([key, value]) => {
-        message += `${key} ${value} `
-      })
-      setErrorMessage(message)
+      setServerErrors(error.data.errors)
     }
   }
 
@@ -49,7 +46,7 @@ export default function Profile() {
         >
           Username
           <input
-            className={`${styles.text} ${errors.username ? styles.invalid : ''}`}
+            className={`${styles.text} ${errors.username || serverErrors.username ? styles.invalid : ''}`}
             id="username"
             defaultValue={user.username ? user.username : null}
             placeholder="Username"
@@ -67,6 +64,7 @@ export default function Profile() {
           {errors.username && errors.username.type === 'maxLength' && (
             <p className={styles.alert}>username must be no more than 20 characters</p>
           )}
+          {serverErrors.username && <p className={styles.alert}>{`username ${serverErrors.username}`.slice(0, -1)}</p>}
         </label>
         <label
           className={styles.label}
@@ -74,14 +72,16 @@ export default function Profile() {
         >
           Email address
           <input
-            className={`${styles.text} ${errors.email ? styles.invalid : ''}`}
+            className={`${styles.text} ${errors.email || serverErrors.email ? styles.invalid : ''}`}
             id="email"
             defaultValue={user.email ? user.email : null}
             placeholder="Email address"
             type="email"
-            {...register('email', { required: true })}
+            {...register('email', { required: true, pattern: /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$/ })}
           />
           {errors.email && errors.email.type === 'required' && <p className={styles.alert}>email is required</p>}
+          {errors.email && errors.email.type === 'pattern' && <p className={styles.alert}>email must be valid</p>}
+          {serverErrors.email && <p className={styles.alert}>{`email ${serverErrors.email}`.slice(0, -1)}</p>}
         </label>
         <label
           className={styles.label}
@@ -124,14 +124,9 @@ export default function Profile() {
           type="submit"
           className={styles.submit}
           value="Save"
+          disabled={isLoading}
         />
         {isLoading && <Spin />}
-        {isError && (
-          <Alert
-            type="error"
-            message={errorMessage}
-          />
-        )}
       </form>
     </>
   )

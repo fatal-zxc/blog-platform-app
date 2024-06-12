@@ -4,7 +4,7 @@ import { Spin, Alert } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { useLoginUserMutation } from '../../services/blog'
+import { useLoginUserMutation, useLazyGetUserQuery } from '../../services/blog'
 
 import styles from './sign-in.module.scss'
 
@@ -19,11 +19,13 @@ export default function SignIn() {
   } = useForm()
 
   const [loginUser, { isLoading, isError }] = useLoginUserMutation()
+  const [trigger] = useLazyGetUserQuery()
 
   const onSubmit = async (data) => {
     try {
       const res = await loginUser(data).unwrap()
       Cookies.set('authToken', res.user.token, { secure: true, expires: 1 })
+      trigger()
       navigate('/')
     } catch (error) {
       let message = ''
@@ -47,7 +49,7 @@ export default function SignIn() {
         >
           Email address
           <input
-            className={`${styles.text} ${errors.email ? styles.invalid : ''}`}
+            className={`${styles.text} ${errors.email || errorMessage ? styles.invalid : ''}`}
             type="email"
             id="email"
             placeholder="Email address"
@@ -61,7 +63,7 @@ export default function SignIn() {
         >
           Password
           <input
-            className={`${styles.text} ${errors.password ? styles.invalid : ''}`}
+            className={`${styles.text} ${errors.password || errorMessage ? styles.invalid : ''}`}
             type="password"
             id="password"
             placeholder="Password"
@@ -75,6 +77,7 @@ export default function SignIn() {
           className={styles.submit}
           type="submit"
           value="Login"
+          disabled={isLoading}
         />
         {isLoading && <Spin />}
         {isError && (

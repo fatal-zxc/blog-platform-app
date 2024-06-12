@@ -2,7 +2,7 @@ import { useForm, useFieldArray } from 'react-hook-form'
 
 import styles from './article-form.module.scss'
 
-export default function ArticleForm({ submit, article }) {
+export default function ArticleForm({ submit, article, isLoading }) {
   const {
     register,
     control,
@@ -134,6 +134,7 @@ export default function ArticleForm({ submit, article }) {
         className={styles.submit}
         type="submit"
         value="Send"
+        disabled={isLoading}
       />
     </form>
   )

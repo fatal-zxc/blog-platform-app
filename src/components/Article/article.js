@@ -7,7 +7,6 @@ import Cookies from 'js-cookie'
 
 import {
   useFetchArticleQuery,
-  // useLazyGetUserQuery,
   useGetUserQuery,
   useDeleteArticleMutation,
   useFavoriteArticleMutation,
@@ -20,9 +19,8 @@ export default function Article() {
   const { slug } = useParams()
   const navigate = useNavigate()
 
-  const { data, error, isLoading } = useFetchArticleQuery(slug)
+  const { data, error, isLoading: isArticleLoading } = useFetchArticleQuery(slug)
   const { data: user } = Cookies.get('authToken') ? useGetUserQuery() : {}
-  // if (Cookies.get('authToken') && isUninitialized && !data) trigger()
   const [deleteArticle] = useDeleteArticleMutation()
 
   const { article } = data ?? {}
@@ -154,7 +152,7 @@ export default function Article() {
       message="smth error"
     />
   )
-  const loader = isLoading && <Spin className={styles.loader} />
+  const loader = isArticleLoading && <Spin className={styles.loader} />
 
   return (
     <article className={styles.article}>

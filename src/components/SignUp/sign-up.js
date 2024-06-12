@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { Alert, Spin } from 'antd'
+import { Spin } from 'antd'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
@@ -10,7 +10,7 @@ import styles from './sign-up.module.scss'
 
 export default function SignUp() {
   const navigate = useNavigate()
-  const [errorMessage, setErrorMessage] = useState()
+  const [serverErrors, setServerErrors] = useState({})
 
   const {
     register,
@@ -19,7 +19,7 @@ export default function SignUp() {
     formState: { errors },
   } = useForm()
 
-  const [registerUser, { isLoading, isError }] = useRegisterUserMutation()
+  const [registerUser, { isLoading }] = useRegisterUserMutation()
 
   const onSubmit = async (data) => {
     try {
@@ -27,11 +27,7 @@ export default function SignUp() {
       Cookies.set('authToken', res.user.token, { secure: true, expires: 1 })
       navigate('/')
     } catch (error) {
-      let message = ''
-      Object.entries(error.data.errors).forEach(([key, value]) => {
-        message += `${key} ${value} `
-      })
-      setErrorMessage(message)
+      setServerErrors(error.data.errors)
     }
   }
 
@@ -50,7 +46,7 @@ export default function SignUp() {
         >
           Username
           <input
-            className={`${styles.text} ${errors.username ? styles.invalid : ''}`}
+            className={`${styles.text} ${errors.username || serverErrors.username ? styles.invalid : ''}`}
             id="username"
             placeholder="Username"
             {...register('username', { required: true, minLength: 3, maxLength: 20, pattern: /^[a-z0-9]*$/ })}
@@ -67,6 +63,7 @@ export default function SignUp() {
           {errors.username && errors.username.type === 'maxLength' && (
             <p className={styles.alert}>username must be no more than 20 characters</p>
           )}
+          {serverErrors.username && <p className={styles.alert}>{`username ${serverErrors.username}`.slice(0, -1)}</p>}
         </label>
         <label
           className={styles.label}
@@ -74,13 +71,15 @@ export default function SignUp() {
         >
           Email address
           <input
-            className={`${styles.text} ${errors.email ? styles.invalid : ''}`}
+            className={`${styles.text} ${errors.email || serverErrors.email ? styles.invalid : ''}`}
             type="email"
             id="email"
             placeholder="Email address"
             {...register('email', { required: true, pattern: /^[a-zA-Z0-9_.]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$/ })}
           />
           {errors.email && errors.email.type === 'required' && <p className={styles.alert}>email is required</p>}
+          {errors.email && errors.email.type === 'pattern' && <p className={styles.alert}>email must be valid</p>}
+          {serverErrors.email && <p className={styles.alert}>{`email ${serverErrors.email}`.slice(0, -1)}</p>}
         </label>
         <label
           className={styles.label}
@@ -146,15 +145,9 @@ export default function SignUp() {
           className={styles.submit}
           value="Create"
           type="submit"
+          disabled={isLoading}
         />
         {isLoading && <Spin />}
-        {isError && (
-          <Alert
-            className={styles.response}
-            type="error"
-            message={errorMessage}
-          />
-        )}
       </form>
       <p className={styles.bottom}>
         Already have an account?

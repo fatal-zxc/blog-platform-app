@@ -34,7 +34,7 @@ export default function Header() {
       >
         <p className={styles.username}>{data.user.username}</p>
         <img
-          src={data.user.image}
+          src={data.user.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'}
           className={styles.avatar}
           alt="avatar"
         />
@@ -43,6 +43,7 @@ export default function Header() {
         type="button"
         onClick={logOut}
         className={styles.logout}
+        disabled={!Cookies.get('authToken')}
       >
         Log out
       </button>

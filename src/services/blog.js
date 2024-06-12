@@ -70,7 +70,7 @@ export const blogAPI = createApi({
           },
         },
       }),
-      invalidatesTags: ['Articles', 'User'],
+      invalidatesTags: ['Articles'],
     }),
     createArticle: build.mutation({
       query: (data) => ({

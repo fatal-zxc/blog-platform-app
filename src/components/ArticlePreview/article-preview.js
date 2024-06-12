@@ -23,8 +23,8 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
   })
   const date = new Date(time)
 
-  const [favoriteArticle] = useFavoriteArticleMutation()
-  const [unfavoriteArticle] = useUnfavoriteArticleMutation()
+  const [favoriteArticle, { isLoading: isFavoriteLoading }] = useFavoriteArticleMutation()
+  const [unfavoriteArticle, { isLoading: isUnfavoriteLoading }] = useUnfavoriteArticleMutation()
 
   const favorite = () => {
     if (!Cookies.get('authToken')) return
@@ -48,6 +48,7 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
               type="button"
               className={styles.heartButton}
               onClick={unfavorite}
+              disabled={isUnfavoriteLoading}
             >
               <HeartFilled className={styles.heart} />
             </button>
@@ -57,6 +58,7 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
               type="button"
               className={styles.heartButton}
               onClick={favorite}
+              disabled={isFavoriteLoading}
             >
               <HeartOutlined className={styles.heart} />
             </button>
