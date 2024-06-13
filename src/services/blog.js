@@ -57,7 +57,6 @@ export const blogAPI = createApi({
           },
         },
       }),
-      invalidatesTags: ['User'],
     }),
     loginUser: build.mutation({
       query: (data) => ({

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { useRegisterUserMutation } from '../../services/blog'
+import { useRegisterUserMutation, useLazyGetUserQuery } from '../../services/blog'
 
 import styles from './sign-up.module.scss'
 
@@ -20,11 +20,13 @@ export default function SignUp() {
   } = useForm()
 
   const [registerUser, { isLoading }] = useRegisterUserMutation()
+  const [trigger] = useLazyGetUserQuery()
 
   const onSubmit = async (data) => {
     try {
       const res = await registerUser(data).unwrap()
       Cookies.set('authToken', res.user.token, { secure: true, expires: 1 })
+      trigger()
       navigate('/')
     } catch (error) {
       setServerErrors(error.data.errors)
