@@ -1,6 +1,6 @@
 import { useLocation, Navigate } from 'react-router-dom'
 
-import { useFetchArticleQuery, useGetUserQuery } from '../services/blog'
+import { useFetchArticleQuery, useGetUserQuery } from '../services/blog.js'
 
 export default function RequireOwner({ children }) {
   const location = useLocation()
@@ -8,7 +8,7 @@ export default function RequireOwner({ children }) {
   const { data: article, isSuccess: isSuccess2 } = useFetchArticleQuery(location.pathname.split('/')[2])
 
   if (isSuccess1 && isSuccess2) {
-    const owner = user.user.username === article.article.author.username
+    const owner = user.username === article.author.username
 
     if (!owner) {
       return <Navigate to="/" />

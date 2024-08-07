@@ -1,27 +1,29 @@
 import { Tag } from 'antd'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
-import { useFavoriteArticleMutation, useUnfavoriteArticleMutation } from '../../services/blog'
+import { useFavoriteArticleMutation, useUnfavoriteArticleMutation } from '../../services/blog.js'
 
 import styles from './article-preview.module.scss'
 
 export default function ArticlePreview({ title, likes, like, tags, description, author, time, slug }) {
   let tagsIdCounter = 0
-  const tagsList = tags.map((text) => {
-    tagsIdCounter += 1
-    return (
-      <Tag
-        key={tagsIdCounter}
-        className={styles.tag}
-      >
-        {text}
-      </Tag>
-    )
-  })
-  const date = new Date(time)
+  const tagsList =
+    tags &&
+    tags.map((text) => {
+      tagsIdCounter += 1
+      return (
+        <Tag
+          key={tagsIdCounter}
+          className={styles.tag}
+        >
+          {text}
+        </Tag>
+      )
+    })
+  const date = parseISO(time)
 
   const [favoriteArticle, { isLoading: isFavoriteLoading }] = useFavoriteArticleMutation()
   const [unfavoriteArticle, { isLoading: isUnfavoriteLoading }] = useUnfavoriteArticleMutation()
@@ -39,7 +41,7 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
     <article className={styles.article}>
       <div className={styles.left}>
         <header className={styles.header}>
-          <Link to={`/articles/${slug}`}>
+          <Link to={`/article/${slug}`}>
             <h1 className={styles.title}>{title}</h1>
           </Link>
           {like ? (
@@ -75,7 +77,11 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
         </div>
         <img
           className={styles.avatar}
-          src={author.image}
+          src={
+            author.avatar
+              ? `http://localhost:5000/avatars/${author.avatar}`
+              : 'https://static.productionready.io/images/smiley-cyrus.jpg'
+          }
           alt="avatar"
         />
       </div>

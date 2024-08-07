@@ -2,8 +2,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Spin, Alert } from 'antd'
 import { useState } from 'react'
 
-import ArticleForm from '../ArticleForm'
-import { useFetchArticleQuery, useLazyFetchArticleQuery, useUpdateArticleMutation } from '../../services/blog'
+import ArticleForm from '../ArticleForm/index.js'
+import { useFetchArticleQuery, useLazyFetchArticleQuery, useUpdateArticleMutation } from '../../services/blog.js'
 
 import styles from './article-edit.module.scss'
 
@@ -22,13 +22,9 @@ export default function ArticleEdit() {
     try {
       const res = await updateArticle(data)
       trigger(slug)
-      navigate(`/articles/${res.data.article.slug}`)
+      navigate(`/article/${res.data.id}`)
     } catch (error) {
-      let message = ''
-      Object.entries(error.data.errors).forEach(([key, value]) => {
-        message += `${key} ${value} `
-      })
-      setErrorMessage(message)
+      setErrorMessage(error.message)
     }
   }
 
@@ -46,7 +42,7 @@ export default function ArticleEdit() {
     <ArticleForm
       submit={onSubmit}
       isLoading={isUpdateLoading}
-      article={article.article}
+      article={article}
     />
   )
 

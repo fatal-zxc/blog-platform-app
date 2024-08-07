@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { useDispatch } from 'react-redux'
 
-import { useLazyGetUserQuery, blogAPI } from '../../services/blog'
+import { useLazyGetUserQuery, blogAPI } from '../../services/blog.js'
 
 import styles from './header.module.scss'
 
@@ -32,9 +32,13 @@ export default function Header() {
         to="/profile"
         className={styles.profile}
       >
-        <p className={styles.username}>{data.user.username}</p>
+        <p className={styles.username}>{data.username}</p>
         <img
-          src={data.user.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'}
+          src={
+            data.avatar
+              ? `http://localhost:5000/avatars/${data.avatar}`
+              : 'https://static.productionready.io/images/smiley-cyrus.jpg'
+          }
           className={styles.avatar}
           alt="avatar"
         />

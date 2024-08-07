@@ -1,10 +1,10 @@
 import { Pagination, ConfigProvider, Alert, Spin } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { useFetchArticlesQuery } from '../../services/blog'
-import ArticlePreview from '../ArticlePreview'
-import { selectPage } from '../../store/selectors'
-import { changePage } from '../../store/app-slice'
+import { useFetchArticlesQuery } from '../../services/blog.js'
+import ArticlePreview from '../ArticlePreview/index.js'
+import { selectPage } from '../../store/selectors.js'
+import { changePage } from '../../store/app-slice.js'
 
 import styles from './article-list.module.scss'
 
@@ -25,9 +25,9 @@ export default function ArticleList() {
         tags={article.tagList}
         description={article.description}
         author={article.author}
-        time={article.updatedAt}
-        slug={article.slug}
-        key={article.slug}
+        time={article.update_time}
+        slug={article.id}
+        key={article.id}
       />
     ))
 

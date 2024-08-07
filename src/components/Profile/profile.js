@@ -3,9 +3,19 @@ import { Spin } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
-import { useGetUserQuery, useLazyGetUserQuery, useUpdateUserMutation } from '../../services/blog'
+import { useGetUserQuery, useLazyGetUserQuery, useUpdateUserMutation } from '../../services/blog.js'
 
 import styles from './profile.module.scss'
+
+// const fileToBase64 = (file) => new Promise((resolve, reject) => {
+//   const reader = new FileReader()
+//   reader.readAsDataURL(file)
+//   reader.onload = () => {
+//     const base64String = reader.result.split(',')[1]
+//     resolve(base64String)
+//   }
+//   reader.onerror = (error) => reject(error)
+// })
 
 export default function Profile() {
   const navigate = useNavigate()
@@ -13,7 +23,7 @@ export default function Profile() {
 
   const { data: userdata, isSuccess, isLoading: isFormLoading } = useGetUserQuery()
   const [trigger] = useLazyGetUserQuery()
-  const { user } = isSuccess && userdata
+  const user = isSuccess && userdata
   const {
     register,
     handleSubmit,
@@ -23,7 +33,7 @@ export default function Profile() {
 
   const onSubmit = async (data) => {
     try {
-      await updateUser(data).unwrap()
+      await updateUser(data)
       trigger()
       navigate('/')
     } catch (error) {
@@ -50,7 +60,7 @@ export default function Profile() {
             id="username"
             defaultValue={user.username ? user.username : null}
             placeholder="Username"
-            {...register('username', { required: true, minLength: 3, maxLength: 20, pattern: /^[a-z0-9]*$/ })}
+            {...register('username', { required: true, minLength: 3, maxLength: 20, pattern: /^[a-z0-9_]*$/ })}
           />
           {errors.username && errors.username.type === 'required' && (
             <p className={styles.alert}>username is required</p>
@@ -113,12 +123,10 @@ export default function Profile() {
           <input
             className={`${styles.text} ${errors.avatar ? styles.invalid : ''}`}
             id="avatar"
-            defaultValue={user.image ? user.image : null}
             placeholder="Avatar image"
-            type="url"
-            {...register('avatar', { required: true })}
+            type="file"
+            {...register('avatar')}
           />
-          {errors.avatar && errors.avatar.type === 'required' && <p className={styles.alert}>avatar is required</p>}
         </label>
         <input
           type="submit"

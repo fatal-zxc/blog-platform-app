@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 export const blogAPI = createApi({
   reducerPath: 'blogAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://blog.kata.academy/api',
+    baseUrl: 'http://localhost:5000',
     prepareHeaders: (headers, { endpoint }) => {
       const authToken = Cookies.get('authToken')
       if (authToken) {
@@ -13,7 +13,6 @@ export const blogAPI = createApi({
       if (
         endpoint === 'loginUser' ||
         endpoint === 'registerUser' ||
-        endpoint === 'updateUser' ||
         endpoint === 'createArticle' ||
         endpoint === 'updateArticle'
       ) {
@@ -35,7 +34,7 @@ export const blogAPI = createApi({
     }),
     fetchArticle: build.query({
       query: (slug) => ({
-        url: `/articles/${slug}`,
+        url: `/article/${slug}`,
       }),
       providesTags: ['Articles'],
     }),
@@ -47,14 +46,12 @@ export const blogAPI = createApi({
     }),
     registerUser: build.mutation({
       query: (data) => ({
-        url: '/users',
+        url: '/user',
         method: 'POST',
         body: {
-          user: {
-            username: data.username,
-            email: data.email,
-            password: data.password,
-          },
+          username: data.username,
+          email: data.email,
+          password: data.password,
         },
       }),
     }),
@@ -63,10 +60,8 @@ export const blogAPI = createApi({
         url: '/users/login',
         method: 'POST',
         body: {
-          user: {
-            email: data.email,
-            password: data.password,
-          },
+          email: data.email,
+          password: data.password,
         },
       }),
       invalidatesTags: ['Articles'],
@@ -76,12 +71,10 @@ export const blogAPI = createApi({
         url: '/articles',
         method: 'POST',
         body: {
-          article: {
-            title: data.title,
-            description: data.description,
-            body: data.text,
-            tagList: data.tags,
-          },
+          title: data.title,
+          description: data.description,
+          body: data.text,
+          tag_list: data.tags,
         },
       }),
       invalidatesTags: ['Articles'],
@@ -94,30 +87,29 @@ export const blogAPI = createApi({
       invalidatesTags: ['Articles'],
     }),
     updateUser: build.mutation({
-      query: (data) => ({
-        url: '/user',
-        method: 'PUT',
-        body: {
-          user: {
-            email: data.email,
-            username: data.username,
-            image: data.avatar,
-            password: data.password,
-          },
-        },
-      }),
+      query: (data) => {
+        const formData = new FormData()
+        formData.append('email', data.email)
+        formData.append('username', data.username)
+        formData.append('password', data.password)
+        formData.append('avatar', data.avatar[0])
+
+        return {
+          url: '/user',
+          method: 'PUT',
+          body: formData,
+        }
+      },
     }),
     updateArticle: build.mutation({
       query: (data) => ({
         url: `/articles/${data.slug}`,
         method: 'PUT',
         body: {
-          article: {
-            title: data.title,
-            description: data.description,
-            body: data.text,
-            tagList: data.tags,
-          },
+          title: data.title,
+          description: data.description,
+          body: data.text,
+          tag_list: data.tags,
         },
       }),
       invalidatesTags: ['Articles'],

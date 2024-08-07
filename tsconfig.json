@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler", // Set module resolution to 'bundler'
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "jsx": "react-jsx",
+    "noEmit": true, // or "emitDeclarationOnly": true, depending on your needs
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+}

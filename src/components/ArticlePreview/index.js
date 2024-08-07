@@ -1,3 +1,3 @@
-import ArticlePreview from './article-preview'
+import ArticlePreview from './article-preview.js'
 
 export default ArticlePreview

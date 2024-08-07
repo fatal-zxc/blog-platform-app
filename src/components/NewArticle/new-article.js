@@ -2,8 +2,8 @@ import { Alert } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import ArticleForm from '../ArticleForm'
-import { useCreateArticleMutation } from '../../services/blog'
+import ArticleForm from '../ArticleForm/index.js'
+import { useCreateArticleMutation } from '../../services/blog.js'
 
 import styles from './new-article.module.scss'
 
@@ -16,13 +16,9 @@ export default function NewArticle() {
     data.tags = data.tags.map((el) => el.value)
     try {
       const res = await createArticle(data)
-      navigate(`/articles/${res.data.article.slug}`)
+      navigate(`/article/${res.data.id}`)
     } catch (error) {
-      let message = ''
-      Object.entries(error.data.errors).forEach(([key, value]) => {
-        message += `${key} ${value} `
-      })
-      setErrorMessage(message)
+      setErrorMessage(error)
     }
   }
 

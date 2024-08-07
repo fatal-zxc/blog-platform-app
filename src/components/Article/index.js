@@ -1,3 +1,3 @@
-import Article from './article'
+import Article from './article.js'
 
 export default Article

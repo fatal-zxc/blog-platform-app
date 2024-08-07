@@ -1,15 +1,15 @@
 import { Route, Routes } from 'react-router-dom'
 
-import ArticleList from '../ArticleList'
-import Layout from '../Layout'
-import Article from '../Article'
-import SignUp from '../SignUp'
-import SignIn from '../SignIn'
-import Profile from '../Profile'
-import NewArticle from '../NewArticle'
-import ArticleEdit from '../ArticleEdit'
-import RequireAuth from '../../hoc/require-auth'
-import RequireOwner from '../../hoc/require-owner'
+import ArticleList from '../ArticleList/index.js'
+import Layout from '../Layout/index.js'
+import Article from '../Article/index.js'
+import SignUp from '../SignUp/index.js'
+import SignIn from '../SignIn/index.js'
+import Profile from '../Profile/index.js'
+import NewArticle from '../NewArticle/index.js'
+import ArticleEdit from '../ArticleEdit/index.js'
+import RequireAuth from '../../hoc/require-auth.js'
+import RequireOwner from '../../hoc/require-owner.js'
 
 import styles from './index.module.scss'
 
@@ -30,7 +30,7 @@ export default function App() {
             element={<ArticleList />}
           />
           <Route
-            path="articles/:slug"
+            path="article/:slug"
             element={<Article />}
           />
           <Route

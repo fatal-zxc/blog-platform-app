@@ -1,3 +1,3 @@
-import Header from './header'
+import Header from './header.js'
 
 export default Header

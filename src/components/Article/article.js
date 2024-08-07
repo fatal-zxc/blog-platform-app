@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { Tag, Alert, Spin, Popconfirm } from 'antd'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import Markdown from 'markdown-to-jsx'
 import Cookies from 'js-cookie'
 
@@ -11,7 +11,7 @@ import {
   useDeleteArticleMutation,
   useFavoriteArticleMutation,
   useUnfavoriteArticleMutation,
-} from '../../services/blog'
+} from '../../services/blog.js'
 
 import styles from './article.module.scss'
 
@@ -23,8 +23,16 @@ export default function Article() {
   const { data: user } = Cookies.get('authToken') ? useGetUserQuery() : {}
   const [deleteArticle] = useDeleteArticleMutation()
 
-  const { article } = data ?? {}
-  const { title, favoritesCount: likes, favorited: like, tagList, description, author, updatedAt, body } = article ?? {}
+  const {
+    title,
+    favoritesCount: likes,
+    favorited: like,
+    tag_list: tagList,
+    description,
+    author,
+    update_time: updatedAt,
+    body,
+  } = data ?? {}
 
   const handleDelete = () => {
     deleteArticle(slug)
@@ -46,7 +54,7 @@ export default function Article() {
       )
     })
 
-  const date = updatedAt ? new Date(updatedAt) : null
+  const date = updatedAt ? parseISO(updatedAt) : null
 
   const [favoriteArticle] = useFavoriteArticleMutation()
   const [unfavoriteArticle] = useUnfavoriteArticleMutation()
@@ -60,7 +68,7 @@ export default function Article() {
     unfavoriteArticle(slug)
   }
 
-  const main = article && (
+  const main = data && (
     <>
       <header className={styles.articleHeader}>
         <div className={styles.left}>
@@ -90,7 +98,7 @@ export default function Article() {
           <div className={styles.tagsList}>{tagsList}</div>
           <p className={styles.description}>{description}</p>
         </div>
-        {user && user.user.username === author.username ? (
+        {user && user.username === author.username ? (
           <div>
             <div className={styles.right}>
               <div className={styles.info}>
@@ -99,7 +107,11 @@ export default function Article() {
               </div>
               <img
                 className={styles.avatar}
-                src={author.image}
+                src={
+                  author.avatar
+                    ? `http://localhost:5000/avatars/${author.avatar}`
+                    : 'https://static.productionready.io/images/smiley-cyrus.jpg'
+                }
                 alt="avatar"
               />
             </div>
@@ -135,7 +147,11 @@ export default function Article() {
             </div>
             <img
               className={styles.avatar}
-              src={author.image}
+              src={
+                author.avatar
+                  ? `http://localhost:5000/avatars/${author.avatar}`
+                  : 'https://static.productionready.io/images/smiley-cyrus.jpg'
+              }
               alt="avatar"
             />
           </div>
