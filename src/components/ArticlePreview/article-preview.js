@@ -79,7 +79,7 @@ export default function ArticlePreview({ title, likes, like, tags, description, 
           className={styles.avatar}
           src={
             author.avatar
-              ? `http://localhost:5000/avatars/${author.avatar}`
+              ? `https://blog-platform-api.onrender.com/avatars/${author.avatar}`
               : 'https://static.productionready.io/images/smiley-cyrus.jpg'
           }
           alt="avatar"

@@ -36,7 +36,7 @@ export default function Header() {
         <img
           src={
             data.avatar
-              ? `http://localhost:5000/avatars/${data.avatar}`
+              ? `https://blog-platform-api.onrender.com/avatars/${data.avatar}`
               : 'https://static.productionready.io/images/smiley-cyrus.jpg'
           }
           className={styles.avatar}

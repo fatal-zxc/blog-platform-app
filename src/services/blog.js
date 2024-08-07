@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 export const blogAPI = createApi({
   reducerPath: 'blogAPI',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000',
+    baseUrl: 'https://blog-platform-api.onrender.com',
     prepareHeaders: (headers, { endpoint }) => {
       const authToken = Cookies.get('authToken')
       if (authToken) {

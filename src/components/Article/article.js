@@ -109,7 +109,7 @@ export default function Article() {
                 className={styles.avatar}
                 src={
                   author.avatar
-                    ? `http://localhost:5000/avatars/${author.avatar}`
+                    ? `https://blog-platform-api.onrender.com/avatars/${author.avatar}`
                     : 'https://static.productionready.io/images/smiley-cyrus.jpg'
                 }
                 alt="avatar"
@@ -149,7 +149,7 @@ export default function Article() {
               className={styles.avatar}
               src={
                 author.avatar
-                  ? `http://localhost:5000/avatars/${author.avatar}`
+                  ? `https://blog-platform-api.onrender.com/avatars/${author.avatar}`
                   : 'https://static.productionready.io/images/smiley-cyrus.jpg'
               }
               alt="avatar"
