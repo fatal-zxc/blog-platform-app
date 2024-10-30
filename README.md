@@ -1,1 +1,1 @@
-site: https://blog-platform-app-bay.vercel.app/
+site: https://blog-platform-app-blond.vercel.app
